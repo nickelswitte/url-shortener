@@ -20,3 +20,4 @@ E9NR=https://github.com/nickelswitte/url-shortener
 MOcn=https://www.youtube.com/watch?v=yAzUFINASY4
 kGa4=https://www.youtube.com/watch?v=yAzUFINASY4
 bMKz=https://drive.google.com/drive/u/0/my-drive
+ZbOg=https://emojidb.org/short-emojis
