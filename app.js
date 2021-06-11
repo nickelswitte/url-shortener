@@ -134,7 +134,7 @@ function generateUuid() {
     let uuid;
 
     do {
-       uuid = nanoid(7);
+       uuid = nanoid(4);
     } while (isUuidAlreadyTaken(uuid));
 
     return uuid;
