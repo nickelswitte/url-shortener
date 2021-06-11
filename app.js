@@ -109,7 +109,7 @@ app.use(function(req, res, next) {
  */
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-  console.log("Paths variable is: " + keyUrlPairs)
+  // console.log("Paths variable is: " + keyUrlPairs)
 })
 
 /**
@@ -122,11 +122,12 @@ function readPaths() {
           return
         }
 
-        console.log(new Date().toISOString() + data);
+        console.log(new Date().toISOString());
 
         // console.log(data);
         keyUrlPairs = data.split("\n");
         // console.log(paths);
+        console.log(countUrls());
     });
 }
 
@@ -173,5 +174,10 @@ function isUuidAlreadyTaken(uuid) {
     return false;
 }
 
+function countUrls() {
+    return keyUrlPairs.length;
+}
+
 
 readPaths();
+
