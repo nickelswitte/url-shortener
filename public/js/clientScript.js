@@ -10,7 +10,7 @@ function sendPost(content) {
     // Sending and receiving data in JSON format using POST method
     //
     var xhr = new XMLHttpRequest();
-    var url = "http://localhost:3000/submit-url";
+    var url = window.location.href + "submit-url";
     
     xhr.open("POST", url, true);
 
