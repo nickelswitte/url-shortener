@@ -108,7 +108,7 @@ app.use(function(req, res, next) {
  * Start the server
  */
 app.listen(port, () => {
-  console.log(`Example app listening at port ${PORT}`)
+  console.log('Example app listening at port' + port);
   // console.log("Paths variable is: " + keyUrlPairs)
 })
 
