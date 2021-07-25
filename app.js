@@ -17,6 +17,8 @@ const __filename = fileURLToPath(import.meta.url);
 const app = express();
 const port = 80;
 
+const delimiter = " ";
+
 // Enable render engine
 app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
@@ -45,7 +47,7 @@ app.get('/', (req, res) => {
 // forwarding route
 app.get('/:key', (req, res, next) => {
 
-    let urlFound = getUrlWithKey(req.params.key);
+    let urlFound = getUrlUsingKey(req.params.key);
 
     if (typeof urlFound !== "undefined") {
         res.redirect(urlFound);
@@ -81,7 +83,7 @@ app.post('/submit-url', (req, res) => {
     res.json({key: uuid});
 
     // Prepare the string to be appended
-    let append = uuid + "=" + url;
+    let append = uuid + delimiter + url;
     
     // Write to file
     fs.appendFileSync('urls.txt', "\n" + append, function (err) {
@@ -154,12 +156,15 @@ function generateUuid() {
     return uuid;
 }
 
-function getUrlWithKey(key) {
+/** 
+ * Find URL using the key
+ */
+function getUrlUsingKey(key) {
     let index, value, result;
 
     for (index = 0; index < keyUrlPairs.length; ++index) {
 
-        value = keyUrlPairs[index].split("=");
+        value = keyUrlPairs[index].split(delimiter);
 
         if (value[0] == key) {
             result = value[1];
@@ -176,7 +181,7 @@ function isUuidAlreadyTaken(uuid) {
 
     for (index = 0; index < keyUrlPairs.length; ++index) {
 
-        currentUuid = keyUrlPairs[index].split("=")[0];
+        currentUuid = keyUrlPairs[index].split(delimiter)[0];
 
         if (currentUuid == uuid) {
             return true;
@@ -190,6 +195,6 @@ function countUrls() {
     return keyUrlPairs.length;
 }
 
-
+// Read the current paths
 readPaths();
 
