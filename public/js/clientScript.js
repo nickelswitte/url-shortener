@@ -1,23 +1,31 @@
+/**
+ * This is the main entry point to generate an url
+ */
 function generateLink() {
+    // Fetch the url from input
     let url = document.getElementById('inputUrl');
 
+    // Start the loading animation
     setInputLoading(true);
+
+    // Send it to the server
     sendPost(url.value);
 }
 
+/**
+ * Function to send a url to the server
+ */
 function sendPost(content) {
     
     // Sending and receiving data in JSON format using POST method
-    //
     var xhr = new XMLHttpRequest();
+    // Build the url which is needed
     var url = window.location.protocol + '//' + window.location.host + "/" + "submit-url";
 
-    console.log(url);
+    // console.log(url);
     
     xhr.open("POST", url, true);
-
     xhr.setRequestHeader("Content-Type", "application/json");
-
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             //var json = JSON.parse(xhr.responseText);
@@ -33,27 +41,55 @@ function sendPost(content) {
 
 }
 
+/**
+ * Function to display the link on the page
+ * In case of errors, it will display this accordingly
+ */
 function displayLink(data) {
 
-    let key = JSON.parse(data).key;
-
-    let linkToDisplay = window.location.protocol + '//' + window.location.host + "/" + key;
-    linkToDisplay = linkToDisplay.replace("http://", "");
-
-    let element = document.getElementById('linkText');
     
+    let linktext = document.getElementById('linkText');
+    let error = JSON.parse(data).error;
+    let key = JSON.parse(data).key;
+    let msg = "";
+
+    if (key) {
+
+        // If a url key successfully arrived
+
+        let linkToDisplay = window.location.protocol + '//' + window.location.host + "/" + key;
+        linkToDisplay = linkToDisplay.replace("http://", "");
+
+        linktext.classList.remove("is-danger");
+
+        msg = linkToDisplay;
+
+    } else {
+        if (error) {
+            msg = error;
+        } else {
+            msg = "An error occured. Sorry for that."
+        }
+
+        linktext.classList.add("is-danger");
+    }
+
+
+    // Animate
 
     setTimeout(() => {  
-        element.value = linkToDisplay;
+        linktext.value = msg;
     }, 200);
 
     setTimeout(() => {  
         setInputLoading(false);
     }, 500);
 
-    // console.log(data + " " + window.location.href);
 }
 
+/**
+ * Copy the link just by a click!
+ */
 function copyLink() {
     /* Get the text field */
     var copyText = document.getElementById("linkText");
@@ -68,11 +104,11 @@ function copyLink() {
        
 }
 
+
 function setInputLoading(bool) {
     let linkControl = document.getElementById("linkControl");
 
     bool ? linkControl.classList.add("is-loading") : linkControl.classList.remove("is-loading");
-    
 }
 
 function deleteUrl() {

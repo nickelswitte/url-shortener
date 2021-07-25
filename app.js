@@ -2,19 +2,22 @@
 import express from 'express';
 // Node File Interaction
 import fs from 'fs';
+// Generate uuids
 import { nanoid } from 'nanoid'
 import path from 'path';
+// Check valid urls
 import validUrl from 'valid-url';
 import { fileURLToPath } from 'url';
 // Template Engine
 import * as eta from "eta"
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 80;
 
+// Enable render engine
 app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
 app.set('views', './views');
@@ -22,10 +25,11 @@ app.set('views', './views');
 
 app.use(express.json());
 app.use(express.static('public'));
-// Include static files of bulma
+// Include static files of bulma and fontawesome
 app.use(express.static('node_modules/bulma/css'));
 app.use(express.static('node_modules/@fortawesome/fontawesome-free/'));
 
+// variable to hold urls
 let keyUrlPairs = "";
 
 // Serve the index page
@@ -49,12 +53,7 @@ app.get('/:key', (req, res, next) => {
         // Continue to the next handler (404)
         next();
     }
-    
-    
 })
-
-
-
 
 
 /**
@@ -66,12 +65,12 @@ app.post('/submit-url', (req, res) => {
 
     // Check if it is a proper url
     if (!validUrl.isUri(url)) {
-        res.json({key: "Oh hey buddy, sorry it seems that this is no proper URL."});
+        res.json({error: "Sorry it seems that this is no proper URL."});
         return;
     } 
 
     if (url.length > 500) {
-        res.json({key: "This URL is unfortunately too long."});
+        res.json({error: "This URL is unfortunately too long with over 500 characters."});
         return;
     }
 
@@ -124,6 +123,8 @@ app.listen(port, () => {
   // console.log("Paths variable is: " + keyUrlPairs)
 })
 
+
+
 /**
  * Read the paths file and update the variable
  */
@@ -139,7 +140,7 @@ function readPaths() {
         // console.log(data);
         keyUrlPairs = data.split("\n");
         // console.log(paths);
-        console.log(countUrls());
+        console.log("Number of urls stored currenty is " + countUrls());
     });
 }
 
@@ -151,7 +152,6 @@ function generateUuid() {
     } while (isUuidAlreadyTaken(uuid));
 
     return uuid;
-
 }
 
 function getUrlWithKey(key) {
