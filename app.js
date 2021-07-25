@@ -1,16 +1,23 @@
 
 import express from 'express';
+// Node File Interaction
 import fs from 'fs';
 import { nanoid } from 'nanoid'
 import path from 'path';
 import validUrl from 'valid-url';
 import { fileURLToPath } from 'url';
+// Template Engine
+import * as eta from "eta"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 80;
+
+app.engine("eta", eta.renderFile);
+app.set("view engine", "eta");
+app.set('views', './views');
 
 
 app.use(express.json());
@@ -21,15 +28,15 @@ app.use(express.static('node_modules/@fortawesome/fontawesome-free/'));
 
 let keyUrlPairs = "";
 
+// Serve the index page
 app.get('/', (req, res) => {
-
-    var options = {
-        root: __dirname,
-    }
-
-    // Send HTML File 
-    res.sendFile('/public/html/index.html', options)
+    res.render("index", {
+        numberOfUrls: countUrls(),
+        title: "url shortener",
+        subtitle: "Hello there! Please enter your <strong>url</strong> below and make it short!"
+    })
 })
+
 
 // forwarding route
 app.get('/:key', (req, res, next) => {
@@ -46,9 +53,9 @@ app.get('/:key', (req, res, next) => {
     
 })
 
-app.get('/test', (req, res) => {
-    res.send(nanoid(7));
-})
+
+
+
 
 /**
  * POST Route to submit urls
@@ -62,6 +69,11 @@ app.post('/submit-url', (req, res) => {
         res.json({key: "Oh hey buddy, sorry it seems that this is no proper URL."});
         return;
     } 
+
+    if (url.length > 500) {
+        res.json({key: "This URL is unfortunately too long."});
+        return;
+    }
 
     // Generate uuid
     let uuid = generateUuid();
@@ -118,7 +130,7 @@ app.listen(port, () => {
 function readPaths() {
     fs.readFile('urls.txt', 'utf8' , (err, data) => {
         if (err) {
-          console.error(err);
+          console.log("No urls.txt could be found. Therefore a new one will be created.");
           return
         }
 

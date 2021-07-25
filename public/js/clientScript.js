@@ -10,7 +10,9 @@ function sendPost(content) {
     // Sending and receiving data in JSON format using POST method
     //
     var xhr = new XMLHttpRequest();
-    var url = window.location.href + "submit-url";
+    var url = window.location.protocol + '//' + window.location.host + "/" + "submit-url";
+
+    console.log(url);
     
     xhr.open("POST", url, true);
 
@@ -35,7 +37,7 @@ function displayLink(data) {
 
     let key = JSON.parse(data).key;
 
-    let linkToDisplay = window.location.href + key;
+    let linkToDisplay = window.location.protocol + '//' + window.location.host + "/" + key;
     linkToDisplay = linkToDisplay.replace("http://", "");
 
     let element = document.getElementById('linkText');

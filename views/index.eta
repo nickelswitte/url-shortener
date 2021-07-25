@@ -1,0 +1,83 @@
+<!-- Include the basic layout -->
+<% layout('./layout', it) %>
+
+<div class="box">
+
+    <div class="field has-addons">
+        
+        <p class="control is-expanded has-icons-left ">
+            <input class="input is-medium is-rounded" type="text" id="inputUrl" placeholder="Your very long url goes here..." autocomplete="off"/>
+
+            <span class="icon is-small is-left">
+                <i class="fas fa-link"></i>
+            </span>
+        </p>
+        
+   
+        <p class="control">
+            <input class="button is-primary is-medium is-rounded" type="button" id="bt" value="Shorten!"
+                onclick="generateLink()"/>
+        </p>
+
+    </div>
+
+
+    <div class="field has-addons">
+
+        <div id="linkControl" class="control is-expanded has-icons-left is-medium">
+            <input class="input is-fullwidth is-medium is-rounded" id="linkText" type="text"
+                value="The very short url will appear here.."  autocomplete="off" readonly>
+
+            <span class="icon is-small is-left">
+                <i class="fas fa-share"></i>
+            </span>
+
+        </div>
+
+        <div class="control">
+            <a class="button is-fullwidth is-medium is-rounded is-dark" onclick="copyLink()">
+                Copy
+            </a>
+        </div>
+    </div>
+</div>
+
+    <!-- Sub text part -->
+
+<div class="columns">
+    <div class="column is-11" id="subtext">
+
+        <div class="content"> 
+
+        <!-- <h6 class="title is-6" style="color:darkgray;">Hello</h3> -->
+
+        
+
+        <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            <strong style="color:darkgray;" >What is an url shortener?</strong> <br> 
+            Somethimes urls tend to be very long and not really readable for humans. 
+            This tends to be extra annoying when you want to share the urls to other people. 
+            Sometimes you care about how your urls look, like in presentations or mails, and want to make them more neat looking.
+            Url shortener take your long urls and give you a very short one, which looks more pretty.
+        </p>
+
+        <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            <strong style="color:darkgray;" >How does it work?</strong> <br> 
+            It is actually really simple. When you put your long url in the upper field and hit the "Shorten!" button, 
+            this page will store your long link in a database. Whenever someone connects to the short link, 
+            this server looks into the database and forwards you to the long link, which is stored on the server.
+        </p>
+
+        <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            <strong style="color:darkgray;" >How long will the links last?</strong> <br> 
+            As this page is not run professionally, the links may break anytime. 
+            There is no guarantee that the links will hold for a certain amount of time.
+        </p>
+
+        <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            Up to now, <b id="numberOfLinks"><%= it.numberOfUrls %></b> urls have been shortened.
+        </p>
+
+        </div>
+    </div>
+</div>

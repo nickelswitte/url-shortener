@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%~ includeFile('./header') %>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8 is-offset-2">
+
+                    <%~ includeFile('./titlebar', it) %>
+
+                    <%~ it.body %>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enter the footer -->
+    <%~ includeFile('./footer') %>
+
+</body>
+
+</html>

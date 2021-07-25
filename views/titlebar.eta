@@ -1,0 +1,11 @@
+<section class="hero is-small">
+    <div class="hero-body">
+        <h1 class="title">
+            <%= it.title %>
+        </h1>
+
+        <p class="subtitle">
+            <%~ it.subtitle %>
+        </p>
+    </div>
+</section>
