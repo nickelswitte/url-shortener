@@ -26,7 +26,7 @@
 
         <div id="linkControl" class="control is-expanded has-icons-left is-medium">
             <input class="input is-fullwidth is-medium is-rounded" id="linkText" type="text"
-                value="The very short url will appear here.."  autocomplete="off" readonly>
+                value="The very short url will appear here.."  autocomplete="off" >
 
             <span class="icon is-small is-left">
                 <i class="fas fa-share"></i>

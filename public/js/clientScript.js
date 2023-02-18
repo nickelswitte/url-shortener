@@ -4,18 +4,22 @@
 function generateLink() {
     // Fetch the url from input
     let url = document.getElementById('inputUrl');
+    let targetUrl = document.getElementById('linkText');
+
+    // Check if the target value has changed
+    let target = targetUrl.value == "The very short url will appear here.." ? null : targetUrl.value;
 
     // Start the loading animation
     setInputLoading(true);
 
     // Send it to the server
-    sendPost(url.value);
+    sendPost(url.value, target);
 }
 
 /**
  * Function to send a url to the server
  */
-function sendPost(content) {
+function sendPost(content, targetUrl) {
     
     // Sending and receiving data in JSON format using POST method
     var xhr = new XMLHttpRequest();
@@ -35,7 +39,7 @@ function sendPost(content) {
     };
 
     // var json = '{"url": ' + content + '}';
-    var data = JSON.stringify({url: content})
+    var data = JSON.stringify({url: content, target: targetUrl})
     
     xhr.send(data);
 

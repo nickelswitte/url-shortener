@@ -64,6 +64,7 @@ app.get('/:key', (req, res, next) => {
 app.post('/submit-url', (req, res) => {
     // get url from post body
     let url = req.body.url;
+    let target = req.body.target;
 
     // Check if it is a proper url
     if (!validUrl.isUri(url)) {
@@ -76,8 +77,39 @@ app.post('/submit-url', (req, res) => {
         return;
     }
 
-    // Generate uuid
-    let uuid = generateUuid();
+    let uuid;
+
+    // If the target exists and it is not a uri, check further
+    if (target != null && !validUrl.isUri(target)) {
+        
+        // Check if the target is already taken
+        if (isUuidAlreadyTaken(target)) {
+            res.json({error: "Sorry, this target is already taken."});
+            return;
+        }
+    
+        // Check if the target is a valid string
+        if (!testTarget(target)) {
+            res.json({error: "Sorry, this target is not valid. Only use letters, numbers and hyphens"});
+            return;
+        }
+
+        // Check if it is too long
+        if (target.length > 30) {
+            res.json({error: "Why are you using an shortener?! Make it shorter!"});
+            return;
+        }
+
+        uuid = target;
+
+
+    } else {
+
+        // Generate uuid
+        uuid = generateUuid();
+    }
+
+
 
     // send response with the key
     res.json({key: uuid});
@@ -193,6 +225,11 @@ function isUuidAlreadyTaken(uuid) {
 
 function countUrls() {
     return keyUrlPairs.length;
+}
+
+function testTarget(target) {
+    const regex = /^[a-zA-Z0-9-]+$/;
+    return regex.test(target);
 }
 
 // Read the current paths
