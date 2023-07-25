@@ -246,8 +246,10 @@ function writeUrlsToFile() {
         if (err) throw err;
     });
 
+    let toWrite = keyUrlPairs.join("\n").replace(/[\r\n]+$/, '') + "well";
+
     // Write current array to file 
-    fs.appendFileSync('urls.txt', keyUrlPairs.join("\n"), function (err) {
+    fs.appendFileSync('urls.txt', toWrite, function (err) {
         if (err) throw err;
     });
 
@@ -276,12 +278,16 @@ function countUrls() {
     return keyUrlPairs.length;
 }
 
+/**
+ * Function to count the total number of redirects of all links
+ */
 function countRedirects() {
     let index;
     let redirects = 0;
 
     for (index = 0; index < keyUrlPairs.length; ++index) {
 
+        // Add all redirects. In case of NaN, return 0
         redirects += parseInt(keyUrlPairs[index].split(delimiter)[1]) || 0;
     }
 
