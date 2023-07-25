@@ -246,7 +246,7 @@ function writeUrlsToFile() {
         if (err) throw err;
     });
 
-    let toWrite = keyUrlPairs.join("\n").replace(/[\r\n]+$/, '') + "well";
+    let toWrite = keyUrlPairs.join("\n").replace(/[\r\n]+$/, '');
 
     // Write current array to file 
     fs.appendFileSync('urls.txt', toWrite, function (err) {
