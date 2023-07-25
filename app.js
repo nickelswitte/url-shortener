@@ -126,6 +126,8 @@ app.post('/submit-url', (req, res) => {
 
     // then load the paths into the variable
     readPaths();
+
+    console.log("New url added at " + new Date().toISOString() + " with a total now of " + countUrls() + " urls");
     
 });
 
@@ -155,7 +157,7 @@ app.use(function(req, res, next) {
  * Start the server
  */
 app.listen(port, () => {
-  console.log('Example app listening at port' + port);
+  console.log('App listening at port ' + port);
   // console.log("Paths variable is: " + keyUrlPairs)
 })
 
@@ -171,12 +173,10 @@ function readPaths() {
           return
         }
 
-        console.log(new Date().toISOString());
+        //console.log(new Date().toISOString());
 
         // console.log(data);
         keyUrlPairs = data.split("\n");
-        // console.log(paths);
-        console.log("Number of urls stored currenty is " + countUrls());
     });
 }
 
@@ -300,5 +300,6 @@ function testTarget(target) {
 }
 
 // Read the current paths
+console.log("Initial scan at " + new Date().toISOString());
 readPaths();
 
