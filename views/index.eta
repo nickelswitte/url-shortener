@@ -75,7 +75,7 @@
         </p>
 
         <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
-            Up to now, <b id="numberOfLinks"><%= it.numberOfUrls %></b> urls have been shortened.
+            Up to now, <b id="numberOfLinks"><%= it.numberOfUrls %></b> urls have been shortened and they have been used <b id="numberOfLinks"><%= it.numberOfRedirects %></b> times.
         </p>
 
         </div>

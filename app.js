@@ -38,6 +38,7 @@ let keyUrlPairs = "";
 app.get('/', (req, res) => {
     res.render("index", {
         numberOfUrls: countUrls(),
+        numberOfRedirects: countRedirects(),
         title: "url shortener",
         subtitle: "Hello there! Please enter your <strong>url</strong> below and make it short!"
     })
@@ -50,6 +51,7 @@ app.get('/:key', (req, res, next) => {
     let urlFound = getUrlUsingKey(req.params.key);
 
     if (typeof urlFound !== "undefined") {
+        increaseClicksOf(req.params.key);
         res.redirect(urlFound);
     } else {
         // Continue to the next handler (404)
@@ -115,7 +117,7 @@ app.post('/submit-url', (req, res) => {
     res.json({key: uuid});
 
     // Prepare the string to be appended
-    let append = uuid + delimiter + url;
+    let append = uuid + delimiter + 0 + delimiter + url;
     
     // Write to file
     fs.appendFileSync('urls.txt', "\n" + append, function (err) {
@@ -199,13 +201,60 @@ function getUrlUsingKey(key) {
         value = keyUrlPairs[index].split(delimiter);
 
         if (value[0] == key) {
-            result = value[1];
+            result = value[2];
             break;
         }
     }
 
     return result;
 }
+
+/** 
+ * Increase the click count of the link with key
+ */
+function increaseClicksOf(key) {
+    let index, row;
+
+    for (index = 0; index < keyUrlPairs.length; ++index) {
+
+        // Split the current row
+        row = keyUrlPairs[index].split(delimiter);
+
+        // If we have the right row
+        if (row[0] == key) {
+            
+            // Increase the number
+            row[1] = (parseInt(row[1]) + 1);
+            // Reattach it back into the array
+            keyUrlPairs[index] = row.join(" ");
+            // Write it down
+            writeUrlsToFile();
+
+            break;
+        }
+    };
+
+}
+
+/** 
+ * Increase the click count of the link with key
+ */
+function writeUrlsToFile() {
+
+    // Remove content
+    fs.truncateSync('urls.txt', 0, function (err) {
+        if (err) throw err;
+    });
+
+    // Write current array to file 
+    fs.appendFileSync('urls.txt', keyUrlPairs.join("\n"), function (err) {
+        if (err) throw err;
+    });
+
+    // then load the paths into the variable
+    readPaths();
+}
+
 
 function isUuidAlreadyTaken(uuid) {
     let index;
@@ -225,6 +274,18 @@ function isUuidAlreadyTaken(uuid) {
 
 function countUrls() {
     return keyUrlPairs.length;
+}
+
+function countRedirects() {
+    let index;
+    let redirects = 0;
+
+    for (index = 0; index < keyUrlPairs.length; ++index) {
+
+        redirects += parseInt(keyUrlPairs[index].split(delimiter)[1]);
+    }
+
+    return redirects;
 }
 
 function testTarget(target) {
