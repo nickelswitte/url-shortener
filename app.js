@@ -282,7 +282,7 @@ function countRedirects() {
 
     for (index = 0; index < keyUrlPairs.length; ++index) {
 
-        redirects += parseInt(keyUrlPairs[index].split(delimiter)[1]);
+        redirects += parseInt(keyUrlPairs[index].split(delimiter)[1]) || 0;
     }
 
     return redirects;
