@@ -39,8 +39,8 @@ app.get('/', (req, res) => {
     res.render("index", {
         numberOfUrls: countUrls(),
         numberOfRedirects: countRedirects(),
-        title: "url shortener",
-        subtitle: "Hello there! Please enter your <strong>url</strong> below and make it short!"
+        title: "FlowerLink",
+        subtitle: "Hello there! Just enter your <strong>url</strong> and make it short!"
     })
 })
 
