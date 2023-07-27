@@ -1,13 +1,12 @@
 <!--footer-->
 
-<footer class="footer">
+<footer class="footer" id="footer">
     <div class="content has-text-centered">
-        <p>
-        <strong>url-shortener</strong> by AppleSnap. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. 
-        
-        <br>
-        This website has been programmed with love and <a href="https://nodejs.org">Node.js</a>, <a href="https://expressjs.com">Express</a>, <a href="https://bulma.io">Bulma</a> and <a href="https://eta.js.org">Eta</a>.
-        </p>
+                
+        <span class="icon">
+            <img id="footer-icon" src="/favicon-32x32.png">
+        </span>
+            
+        <strong>FlowerLink</strong>. This page was created with 🧡 and ☕ by Nickels.
     </div>
 </footer>

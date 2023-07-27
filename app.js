@@ -33,14 +33,18 @@ app.use(express.static('node_modules/@fortawesome/fontawesome-free/'));
 
 // variable to hold urls
 let keyUrlPairs = "";
+let subtitles = "";
 
 // Serve the index page
 app.get('/', (req, res) => {
+
+    let subtitle = subtitles[Math.floor(Math.random() * subtitles.length)];
+
     res.render("index", {
         numberOfUrls: countUrls(),
         numberOfRedirects: countRedirects(),
         title: "FlowerLink",
-        subtitle: "Hello there! Just enter your <strong>url</strong> and make it short!"
+        subtitle: subtitle
     })
 })
 
@@ -294,6 +298,23 @@ function countRedirects() {
     return redirects;
 }
 
+/**
+ * Function to read the subtitles text file and store it in a variable
+ */
+function readSubtitlesFile() {
+    fs.readFile('subtitles.txt', 'utf8' , (err, data) => {
+        if (err) {
+          console.log("No urls.txt could be found. Therefore a new one will be created.");
+          return
+        }
+
+        //console.log(new Date().toISOString());
+
+        // console.log(data);
+        subtitles = data.split("\n");
+    });
+}
+
 function testTarget(target) {
     const regex = /^[a-zA-Z0-9-]+$/;
     return regex.test(target);
@@ -302,4 +323,5 @@ function testTarget(target) {
 // Read the current paths
 console.log("Initial scan at " + new Date().toISOString());
 readPaths();
+readSubtitlesFile();
 

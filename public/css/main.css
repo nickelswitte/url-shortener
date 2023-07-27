@@ -8,3 +8,28 @@
 #subtext {
     margin-left: 1.5rem;
 }
+
+#footer {
+    margin-top: auto;
+}
+
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+}
+
+#footer {
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+  
+/* Disable grayscale on hover */
+#footer:hover {
+    -webkit-filter: grayscale(0);
+    filter: none;
+    transition: 1s
+}

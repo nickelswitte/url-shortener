@@ -15,7 +15,7 @@
         
    
         <p class="control">
-            <input class="button is-primary is-medium is-rounded" type="button" id="bt" value="Shorten!"
+            <input class="button is-info is-medium is-rounded" type="button" id="bt" value="Shorten!"
                 onclick="generateLink()"/>
         </p>
 
@@ -55,10 +55,10 @@
 
         <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
             <strong style="color:darkgray;" >What is an url shortener?</strong> <br> 
-            Somethimes urls tend to be very long and not really readable for humans. 
-            This tends to be extra annoying when you want to share the urls to other people. 
+            Sometimes urls tend to be very long and not really readable for humans. 
+            This is extra annoying when you want to share the urls to other people. 
             Sometimes you care about how your urls look, like in presentations or mails, and want to make them more neat looking.
-            Url shortener take your long urls and give you a very short one, which looks more pretty.
+            Url shorteners like FlowerLink take your long urls and give you a very short one, which looks more pretty.
         </p>
 
         <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
@@ -75,6 +75,12 @@
         </p>
 
         <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            <strong style="color:darkgray;" >Protip!</strong> <br> 
+            You can enter a custom short url by by replacing "The very short url will appear here.." with the link ending you like. This can help if you need a link that needs to be easy to remember.
+        </p>
+
+        <p class="help" style="color:darkgray; hyphens: auto; text-align: justify">
+            <strong style="color:darkgray;" >Statistics</strong> <br>
             Up to now, <b id="numberOfLinks"><%= it.numberOfUrls %></b> urls have been shortened and they have been used <b id="numberOfLinks"><%= it.numberOfRedirects %></b> times.
         </p>
 
